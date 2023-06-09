@@ -78,10 +78,14 @@ def prune_quantize_save_model(model, X, y, path_to_tflite_model, BATCH_SIZE=1024
         X,
         y,
         batch_size=BATCH_SIZE,
-        epochs=1,
+        epochs=3,
         validation_split=0.1
     )
 
+    # This might be where the error is - This shouldnt' look this weird but
+    # it's a workaround for running a CNN. If we had a FF network then we can
+    # save it as a tflite model directly but for CNNs we need to do this. Maybe
+    # we don't even need a CNN. 
     batch_size = 1
     input_shape = pqat_model.inputs[0].shape.as_list()
     input_shape[0] = batch_size
