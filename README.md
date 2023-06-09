@@ -30,6 +30,9 @@ https://sentinel.esa.int/web/sentinel/missions
 Sentinel open acess hub:
 https://scihub.copernicus.eu
 
+Sentinel 2 data on Google Earth Engine:
+https://developers.google.com/earth-engine/datasets/catalog/sentinel-2
+
 ARSET fundamentals of remote sensing: https://appliedsciences.nasa.gov/join-mission/training/english/arset-fundamentals-remote-sensing
 
 Github tutorial: https://docs.github.com/en/get-started/quickstart/hello-world
