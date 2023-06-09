@@ -2,5 +2,61 @@
 
 This (_very_ experimental) package provides a few different classes for general network building and hyperparamer tuning, in the network_builder.py file, along with some functions for shrinking and converting keras models to .tflite files, contained in the network_shrinker.py file. 
 
-## network_builder
-The classes in this module try and build a network to solve an arbitrary classification or regression problem, whilst also trying to find the smallest number of parameters. It's a little bit confusing at the moment and I'll try and sort it all out at some point soon, but here is my best explanation as to how it works - 
+## network_builder.py
+The classes in this module try and build a network to solve an arbitrary classification or regression problem, whilst also trying to find the smallest number of parameters. It's a little bit confusing at the moment and I'll try and sort it all out at some point soon, but here is my best explanation as to how it works - The code uses Optuna for hyperparameter tuning (See [the docs](https://optuna.org)). There are three classes at the moment:
+1. GeneralNNRegressor
+2. GeneralNNClassifier
+3. CNNClassifier
+
+Both GeneralNNRegressor and Classifier produce purely feedforward networks, whilst CNNClassifier outputs a pure Convolutional network with no feedforward layers (that needs fixing lol). The classes are all have a similar structure, so we could implement some kind of base class or something. The structure is like this:
+
+```python
+class GeneralNN:
+    def __init__(self, X, y, SIZE_PENALTY stuff that needs unifying across the classes):
+      '''
+      Initialise stuff 
+      '''
+      pass
+    def get_best_trained_model(self):
+        '''
+        Runs the whole process:
+        1. Find the best model parameters 
+        2. Constructs the best model
+        3. Compiles and trains the model
+        '''
+        pass
+    
+    def objective(self, trial):
+        '''
+        Optuna trial objective function
+        '''
+        pass
+      
+    def find_best_model_params(self):
+        '''
+        Finds the set of model parameters that:
+        A. Have the best score
+        B. Is the smallest
+        The paramater SIZE_PENALTY changes how heavily the function weights the size of the network
+        '''
+        pass
+
+    def make_model(self, network_params):
+        '''
+        Constructs the keras neural network from the dictionary of network parameters
+        '''
+        pass
+      
+    @staticmethod
+    def count_trainable_params(model):
+        '''
+        Counts the trainable parameters in a keras model - dosen't really need to be a staticmethod in each class
+        '''
+        pass
+```
+There are quite a lot of things that can be changed in this, but hopefully this allows for an easier way to find a good network that isn't just enormous. If we can reduce the number of parameters in the network before we even start quantising it then that would be great. We might not even need these in the end as all the shrinking stuff works with any trained keras network. 
+
+## network_shrinker.py
+This is the code we want to be paying attention to. It 'works' at the moment, but the total size reduction is only about 4X, and I know it's possible to get around 10X. Perhaps someone can look into it a bit more next week. Essentially, I have wrapped all of the code from the [Tensorflow lite for microcontrollers](https://www.tensorflow.org/lite/performance/post_training_integer_quant) webpage.
+
+
