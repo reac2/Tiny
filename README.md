@@ -15,7 +15,7 @@ Sentinel 2
 ...
 
 ## Toolkit
-Dtaa downloads
+Data downloads
 Data cleaning
 Model generation
 Quantization aware training
@@ -39,6 +39,8 @@ https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-2-msi/processi
 ARSET fundamentals of remote sensing: https://appliedsciences.nasa.gov/join-mission/training/english/arset-fundamentals-remote-sensing
 
 Github tutorial: https://docs.github.com/en/get-started/quickstart/hello-world
+
+Github student developer pack - get acess to github copilot: https://education.github.com/pack
 
 # TinyMLToolkit - build stuff, shrink stuff
 
