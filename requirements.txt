@@ -1,0 +1,6 @@
+scikit-learn
+numpy
+tensorflow
+optuna
+tensorflow_model_optimization
+tqdm
