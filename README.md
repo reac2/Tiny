@@ -46,11 +46,12 @@ Github student developer pack - get acess to github copilot: https://education.g
 
 This (_very_ experimental) package provides a few different classes for general network building and hyperparamer tuning, in the network_builder.py file, along with some functions for shrinking and converting keras models to .tflite files, contained in the network_shrinker.py file. You can pip install this package by running the following command in the terminal:
 
-```bash  pip install git+https://github.com/reac2/Tiny```
+  
+`pip install git+https://github.com/reac2/Tiny`
 
 This will install the package from the github repo. You can then import the package in your python script by running:
 
-```python  import tinymltoolkit```
+`import tinymltoolkit`
 
 This will work for now, as the repo is public. We will have to change this when the repo goes private.
 
