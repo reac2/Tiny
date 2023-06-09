@@ -44,7 +44,15 @@ Github student developer pack - get acess to github copilot: https://education.g
 
 # TinyMLToolkit - build stuff, shrink stuff
 
-This (_very_ experimental) package provides a few different classes for general network building and hyperparamer tuning, in the network_builder.py file, along with some functions for shrinking and converting keras models to .tflite files, contained in the network_shrinker.py file. 
+This (_very_ experimental) package provides a few different classes for general network building and hyperparamer tuning, in the network_builder.py file, along with some functions for shrinking and converting keras models to .tflite files, contained in the network_shrinker.py file. You can pip install this package by running the following command in the terminal:
+
+```bash  pip install git+https://github.com/reac2/Tiny```
+
+This will install the package from the github repo. You can then import the package in your python script by running:
+
+```python  import tinymltoolkit```
+
+This will work for now, as the repo is public. We will have to change this when the repo goes private.
 
 ## network_builder.py
 The classes in this module try and build a network to solve an arbitrary classification or regression problem, whilst also trying to find the smallest number of parameters. It's a little bit confusing at the moment and I'll try and sort it all out at some point soon, but here is my best explanation as to how it works - The code uses Optuna for hyperparameter tuning (See [the docs](https://optuna.org)). There are three classes at the moment:
