@@ -33,6 +33,9 @@ https://scihub.copernicus.eu
 Sentinel 2 data on Google Earth Engine:
 https://developers.google.com/earth-engine/datasets/catalog/sentinel-2
 
+Processing needed for Sentinel 2 level 1 to level 2 data:
+https://sentinels.copernicus.eu/web/sentinel/user-guides/sentinel-2-msi/processing-levels/level-2
+
 ARSET fundamentals of remote sensing: https://appliedsciences.nasa.gov/join-mission/training/english/arset-fundamentals-remote-sensing
 
 Github tutorial: https://docs.github.com/en/get-started/quickstart/hello-world
