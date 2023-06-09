@@ -30,6 +30,9 @@ https://sentinel.esa.int/web/sentinel/missions
 Sentinel open acess hub:
 https://scihub.copernicus.eu
 
+ARSET fundamentals of remote sensing: https://appliedsciences.nasa.gov/join-mission/training/english/arset-fundamentals-remote-sensing
+
+Github tutorial: https://docs.github.com/en/get-started/quickstart/hello-world
 
 # TinyMLToolkit - build stuff, shrink stuff
 
