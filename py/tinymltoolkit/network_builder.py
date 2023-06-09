@@ -8,28 +8,28 @@ from sklearn.preprocessing import StandardScaler
 
 
 class GeneralNNRegressor:
-    def __init__(self, X, y):
+    def __init__(self, X, y, n_trials=50, SIZE_PENALTY=0.3):
         """
         General Neural Network (NN) regressor.
 
         Args:
             X (numpy.ndarray): The input data.
             y (numpy.ndarray): The target data.
+            n_trials (int, optional): The number of optuna trials.
+            SIZE_PENALTY (float, optional): The penalty for the size of the network (bigger means a smaller network at the end)
         """
         self.X = X
         self.y = y
+        self.n_trials = n_trials
+        self.SIZE_PENALTY = SIZE_PENALTY
 
-    def get_best_trained_model(self, n_trials=50):
+    def get_best_trained_model(self):
         """
         Get the best trained model by finding the best model parameters and training the model.
-
-        Args:
-            n_trials (int, optional): The number of trials for hyperparameter optimization. Defaults to 50.
-
         Returns:
             tf.keras.Model: The best trained model.
         """
-        best_network_params = self.find_best_model_params(n_trials=n_trials)
+        best_network_params = self.find_best_model_params()
         best_model = self.make_model(best_network_params)
         best_model.compile(
             loss=tf.keras.losses.MeanSquaredError(),
@@ -76,7 +76,7 @@ class GeneralNNRegressor:
         print(f'Score: {score / n_splits}, Model size: {self.count_trainable_parameters(model)}')
         return score / n_splits, self.count_trainable_parameters(model)
 
-    def find_best_model_params(self, n_trials):
+    def find_best_model_params(self):
         """
         Find the best model parameters using Optuna's hyperparameter optimization.
 
@@ -87,12 +87,12 @@ class GeneralNNRegressor:
             dict: The best model parameters.
         """
         study = optuna.create_study(directions=['minimize', 'minimize'])
-        study.optimize(self.objective, n_trials)
+        study.optimize(self.objective, self.n_trials)
 
         vals = np.array([[i.values[0], i.values[1]] for i in study.trials])
         vals[:, 0] = 1 - (vals[:, 0] - vals[:, 0].min()) / (vals[:, 0].max() - vals[:, 0].min())
         vals[:, 1] = 1 - ((vals[:, 1] - vals[:, 1].min()) / (vals[:, 1].max() - vals[:, 1].min()))
-        comb_err = vals[:, 0] + 0.2 * vals[:, 1]
+        comb_err = vals[:, 0] + self.SIZE_PENALTY * vals[:, 1]
 
         return study.trials[np.argmax(comb_err)].params
 
@@ -135,7 +135,7 @@ class GeneralNNRegressor:
         return trainable_params.numpy()
     
 class GeneralNNClassifier:
-    def __init__(self, X, y, n_trials=50):
+    def __init__(self, X, y, n_trials=50, SIZE_PENALTY=0.3):
         """
         General Neural Network (NN) classifier.
 
@@ -143,11 +143,13 @@ class GeneralNNClassifier:
             X (numpy.ndarray): The input data.
             y (numpy.ndarray): The target data.
             n_trials (int, optional): The number of trials for hyperparameter optimization. Defaults to 50.
+            SIZE_PENALTY (float, optional): The penalty for the size of the network (bigger means a smaller network at
         """
         self.X = X
         self.num_classes = len(np.unique(y))
         self.y = tf.keras.utils.to_categorical(y)
         self.n_trials = n_trials 
+        self.SIZE_PENALTY = SIZE_PENALTY
 
     def get_best_trained_model(self):
         """
@@ -221,7 +223,7 @@ class GeneralNNClassifier:
 
         vals = np.array([[i.values[0], i.values[1]] for i in study.trials])
         vals[:, 1] = 1 - ((vals[:, 1] - vals[:, 1].min()) / (vals[:, 1].max() - vals[:, 1].min()))
-        comb_err = vals[:, 0] + 0.2 * vals[:, 1]
+        comb_err = vals[:, 0] + self.SIZE_PENALTY * vals[:, 1]
     
         return study.trials[np.argmax(comb_err)].params
 
@@ -265,7 +267,7 @@ class GeneralNNClassifier:
         return trainable_params.numpy()
 
 class CNNClassifier:
-    def __init__(self, X, y, n_trials=50, BATCH_SIZE=1024, EPOCHS=10):
+    def __init__(self, X, y, n_trials=50, BATCH_SIZE=1024, EPOCHS=10, SIZE_PENALTY=0.3):
         """
         Convolutional Neural Network (CNN) classifier.
 
@@ -274,6 +276,8 @@ class CNNClassifier:
             y (numpy.ndarray): The target data.
             n_trials (int, optional): The number of trials for hyperparameter optimization. Defaults to 50.
             BATCH_SIZE (int, optional): The batch size for training the model. Defaults to 1024.
+            EPOCHS (int, optional): The number of epochs for training
+            SIZE_PENALTY (float, optional): The penalty for the size of the network (bigger means a smaller network at
         """
         self.X = X
         self.num_classes = len(np.unique(y))
@@ -281,6 +285,7 @@ class CNNClassifier:
         self.n_trials = n_trials
         self.BATCH_SIZE = BATCH_SIZE
         self.EPOCHS = EPOCHS
+        self.SIZE_PENALTY = SIZE_PENALTY
 
     def get_best_trained_model(self):
         """
@@ -352,7 +357,7 @@ class CNNClassifier:
 
         vals = np.array([[i.values[0], i.values[1]] for i in study.trials])
         vals[:, 1] = 1 - ((vals[:, 1] - vals[:, 1].min()) / (vals[:, 1].max() - vals[:, 1].min()))
-        comb_err = vals[:, 0] + 0.2 * vals[:, 1]
+        comb_err = vals[:, 0] + self.SIZE_PENALTY * vals[:, 1]
 
         return study.trials[np.argmax(comb_err)].params
 
@@ -405,22 +410,3 @@ class CNNClassifier:
         trainable_params = tf.reduce_sum([tf.reduce_prod(var.shape) for var in model.trainable_variables])
         return trainable_params.numpy()
 
-
-
-
-if __name__ == '__main__':
-    with tf.device('CPU:0'):
-        (X_train, y_train), (X_test, y_test) = tf.keras.datasets.boston_housing.load_data()
-        # X_train = X_train[:10000] / 255
-        # X_test = X_test / 255
-        # y_train = y_train[:10000]
-        scale = StandardScaler()
-        X_train = scale.fit_transform(X_train)
-        X_test = scale.transform(X_test)
-
-        gen_net = GeneralNNRegressor(X_train, y_train)
-        model = gen_net.get_best_trained_model()
-        print('score', model.evaluate(X_test, y_test))
-        print(model.summary())
-    # model.compile(optimizer='adam', loss='categorical_crossentropy')
-    # print(model.summary())
