@@ -99,6 +99,6 @@ class GeneralNN:
 There are quite a lot of things that can be changed in this, but hopefully this allows for an easier way to find a good network that isn't just enormous. If we can reduce the number of parameters in the network before we even start quantising it then that would be great. We might not even need these in the end as all the shrinking stuff works with any trained keras network. 
 
 ## network_shrinker.py
-This is the code we want to be paying attention to. It 'works' at the moment, but the total size reduction is only about 4X, and I know it's possible to get around 10X. Perhaps someone can look into it a bit more next week. Essentially, I have wrapped all of the code from the [Tensorflow lite for microcontrollers](https://www.tensorflow.org/lite/microcontrollers) webpage. 
+This is the code we want to be paying attention to. It 'works' at the moment, but the total size reduction is only about 4X, and I know it's possible to get around 10X. Perhaps someone can look into it a bit more next week. Essentially, I have wrapped all of the code from the [Tensorflow lite for microcontrollers](https://www.tensorflow.org/lite/microcontrollers) webpage. It's not great, so I've created some issues that I know are currently present. However, I'm sure there are more.
 
 
