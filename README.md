@@ -44,6 +44,10 @@ Github tutorial: https://docs.github.com/en/get-started/quickstart/hello-world
 
 Github student developer pack - get acess to github copilot: https://education.github.com/pack
 
+# Resources for Space weather 
+https://izw1.caltech.edu/ACE/ASC/DATA/level3/icmetable2.htm 
+papers in space weather papers drive
+
 # TinyMLToolkit - build stuff, shrink stuff
 
 This (_very_ experimental) package provides a few different classes for general network building and hyperparamer tuning, in the network_builder.py file, along with some functions for shrinking and converting keras models to .tflite files, contained in the network_shrinker.py file. You can pip install this package by running the following command in the terminal:
