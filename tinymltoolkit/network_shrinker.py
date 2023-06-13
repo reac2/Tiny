@@ -56,7 +56,7 @@ def prune_quantize_save_model(model, X, y, path_to_tflite_model, BATCH_SIZE=1024
         validation_split=0.1,
         callbacks=callbacks
     )
-    # testing testing 12 12
+    
     def representative_dataset():
         # Generator function for representative dataset used in quantization
         for i in range(300):
