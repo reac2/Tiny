@@ -21,7 +21,7 @@ def prune_quantize_save_model(model, X, y, path_to_tflite_model, BATCH_SIZE=1024
 
     # Define pruning parameters
     pruning_params = {
-        'pruning_schedule': tfmot.sparsity.keras.ConstantSparsity(target_sparsity=0.99, begin_step=0, frequency=1)
+        'pruning_schedule': tfmot.sparsity.keras.ConstantSparsity(target_sparsity=0.60, begin_step=0, frequency=1)
         #target_sparsity: how sparse you want the model to be (this might be key to look into)
         #begin_step: what stage in the training would you like to start pruining (this could be good to change to allow a pattern to form first and then prune)
         #frequency: how often do you prune (this could again be a good one to change to prune more often or less often but more vigourously perhaps)
@@ -52,7 +52,7 @@ def prune_quantize_save_model(model, X, y, path_to_tflite_model, BATCH_SIZE=1024
         X,
         y,
         batch_size=BATCH_SIZE,
-        epochs=10,
+        epochs=5,
         validation_split=0.1,
         callbacks=callbacks
     )
@@ -84,7 +84,7 @@ def prune_quantize_save_model(model, X, y, path_to_tflite_model, BATCH_SIZE=1024
         X,
         y,
         batch_size=BATCH_SIZE,
-        epochs=10,
+        epochs=3,
         validation_split=0.1
     )
 
