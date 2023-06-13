@@ -52,7 +52,7 @@ def prune_quantize_save_model(model, X, y, path_to_tflite_model, BATCH_SIZE=1024
         X,
         y,
         batch_size=BATCH_SIZE,
-        epochs=3,
+        epochs=10,
         validation_split=0.1,
         callbacks=callbacks
     )
@@ -84,7 +84,7 @@ def prune_quantize_save_model(model, X, y, path_to_tflite_model, BATCH_SIZE=1024
         X,
         y,
         batch_size=BATCH_SIZE,
-        epochs=3,
+        epochs=10,
         validation_split=0.1
     )
 
