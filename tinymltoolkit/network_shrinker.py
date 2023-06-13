@@ -13,6 +13,7 @@ def prune_quantize_save_model(model, X, y, path_to_tflite_model, BATCH_SIZE=1024
         X (numpy.ndarray): The input data for training the model.
         y (numpy.ndarray): The target data for training the model.
         path_to_tflite_model (str): The file path to save the resulting TFLite model.
+        BATCH_SIZE (int): The batch size to be used in training.
 
     Returns:
         None
@@ -20,12 +21,16 @@ def prune_quantize_save_model(model, X, y, path_to_tflite_model, BATCH_SIZE=1024
 
     # Define pruning parameters
     pruning_params = {
-        'pruning_schedule': tfmot.sparsity.keras.ConstantSparsity(0.5, begin_step=0, frequency=100)
+        'pruning_schedule': tfmot.sparsity.keras.ConstantSparsity(target_sparsity=0.5, begin_step=0, frequency=100)
+        #target_sparsity: how sparse you want the model to be (this might be key to look into)
+        #begin_step: what stage in the training would you like to start pruining (this could be good to change to allow a pattern to form first and then prune)
+        #frequency: how often do you prune (this could again be a good one to change to prune more often or less often but more vigourously perhaps)
     }
 
     # Define callbacks for updating pruning step
     callbacks = [
         tfmot.sparsity.keras.UpdatePruningStep()
+        # allows pruning to take place
     ]
 
     # Prune the model
@@ -34,7 +39,8 @@ def prune_quantize_save_model(model, X, y, path_to_tflite_model, BATCH_SIZE=1024
 
     # Use a smaller learning rate for fine-tuning
     opt = tf.keras.optimizers.legacy.Adam(learning_rate=1e-5)
-
+    
+    # Compiling the pruned model 
     pruned_model.compile(
         loss=tf.keras.losses.CategoricalCrossentropy(),
         optimizer=opt,
@@ -169,6 +175,9 @@ def run_tflite_model(path_to_tflite_model, X_data):
 
 
 def get_tflite_model_size(path):
+    
+    # Returns the file size of the model given the path to it
+
     return os.path.getsize(path)/float(2**20)
 
 
