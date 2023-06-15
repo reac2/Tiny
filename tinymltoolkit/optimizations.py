@@ -29,10 +29,15 @@ def setPrunedModelh5(modelToBePruned,X_train,y_train,sparsity,frequency,pathToSa
     tf.keras.saving.save_model(model=prunedModel,filepath=pathToSave,save_format="h5")
 
 
+
 def setQuantizedModel(modelToBeQuantizedPath,quantizedModelPath,X_train):
     converter = tf.lite.TFLiteConverter.from_saved_model(modelToBeQuantizedPath)
     converter.optimizations = [tf.lite.Optimize.DEFAULT]
-    converter.representative_dataset = representative_dataset(X_train=X_train)
+    def representative_dataset():
+        # Generator function for representative dataset used in quantization
+        for i in range(300):
+            yield [X_train[i].astype(np.float32)]
+    converter.representative_dataset = representative_dataset()
     converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
     converter.inference_input_type = tf.int8  # or tf.uint8
     converter.inference_output_type = tf.int8  # or tf.uint8
@@ -41,7 +46,3 @@ def setQuantizedModel(modelToBeQuantizedPath,quantizedModelPath,X_train):
         f.write(quantizedModelTFlite)
 
 
-def representative_dataset(X_train):
-    # Generator function for representative dataset used in quantization
-    for i in range(300):
-        yield [X_train[i].astype(np.float32)]
