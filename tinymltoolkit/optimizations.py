@@ -37,7 +37,7 @@ def setQuantizedModel(modelToBeQuantizedPath,quantizedModelPath,X_train):
         # Generator function for representative dataset used in quantization
         for i in range(300):
             yield [X_train[i].astype(np.float32)]
-    converter.representative_dataset = representative_dataset()
+    converter.representative_dataset = representative_dataset
     converter.target_spec.supported_ops = [tf.lite.OpsSet.TFLITE_BUILTINS_INT8]
     converter.inference_input_type = tf.int8  # or tf.uint8
     converter.inference_output_type = tf.int8  # or tf.uint8
