@@ -7,7 +7,7 @@ from tinymltoolkit import data_download
 def test_create_color_map():
     hex_list = ['#FF0000', '#00FF00', '#0000FF']
 
-    color_map = create_color_map(hex_list)
+    color_map = data_download.create_color_map(hex_list)
 
     # Check if the returned object is an instance of LinearSegmentedColormap
     assert isinstance(color_map, LinearSegmentedColormap)
