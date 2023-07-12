@@ -34,7 +34,7 @@ def setPrunedModelh5(modelToBePruned,X_train,y_train,sparsity,frequency,pathToSa
 
 
 def setQuantizedModel(modelToBeQuantizedPath,quantizedModelPath,X_train):
-    converter = tf.lite.TFLiteConverter.from_saved_model(modelToBeQuantizedPath)
+    converter = tf.lite.TFLiteConverter.from_keras_model(modelToBeQuantizedPath)
     converter.optimizations = [tf.lite.Optimize.DEFAULT]
     def representative_dataset():
         # Generator function for representative dataset used in quantization
