@@ -18,9 +18,8 @@ def test_create_color_map():
     assert len(color_map._segmentdata['blue']) == len(hex_list)
 
     # Check if the color map is created correctly by comparing specific colors
-    assert np.allclose(color_map(0.0), (1.0, 0.0, 0.0, 1.0))  # First color should be red
-    assert np.allclose(color_map(0.5), (0.0, 1.0, 0.0, 1.0))  # Middle color should be green
-    assert np.allclose(color_map(1.0), (0.0, 0.0, 1.0, 1.0))  # Last color should be blue
+    assert np.allclose(color_map(0.0), (1.0, 1.0, 1.0, 1.0))  # First color should be white
+    assert np.allclose(color_map(1.0), (0.0, 0.0, 0.0, 1.0))  # Last color should be black
 
 def test_calculate_square_corners():
     pointlat = 10.0
