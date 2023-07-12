@@ -5,7 +5,7 @@ from tinymltoolkit import data_download
 
 
 def test_create_color_map():
-    hex_list = ['#FF0000', '#00FF00', '#0000FF']
+    hex_list = ['FF0000', '00FF00', '0000FF']
 
     color_map = data_download.create_color_map(hex_list)
 
@@ -36,7 +36,7 @@ def test_calculate_square_corners():
 
     # Check if changing the padding affects the calculated values
     new_pad = 0.05
-    toplat, toplong, botlat, botlong = calculate_square_corners(pointlat, pointlong, new_pad)
+    toplat, toplong, botlat, botlong = data_download.calculate_square_corners(pointlat, pointlong, new_pad)
     assert toplat == 10.05
     assert toplong == 20.05
     assert botlat == 9.95
