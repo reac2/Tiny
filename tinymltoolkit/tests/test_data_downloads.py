@@ -5,7 +5,7 @@ from tinymltoolkit import data_download
 
 
 def test_create_color_map():
-    hex_list = ['FF0000', '00FF00', '0000FF']
+    hex_list = ['FFFFFF', '000000']
 
     color_map = data_download.create_color_map(hex_list)
 
