@@ -1,6 +1,9 @@
 import tensorflow as tf
 import tensorflow_model_optimization as tfmot
 import numpy as np
+from tqdm import tqdm
+
+
 
 def setPrunedModelh5(modelToBePruned,X_train,y_train,sparsity,frequency,pathToSave):
     #define pruning function
