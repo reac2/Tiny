@@ -5,21 +5,22 @@ from tinymltoolkit import data_download
 
 
 def test_create_color_map():
-    hex_list = ['FF0000', '00FF00', '0000FF']
+    hex_list = ['#FF0000', '#00FF00', '#0000FF']
 
-    color_map = data_download.create_color_map(hex_list)
+    color_map = create_color_map(hex_list)
 
     # Check if the returned object is an instance of LinearSegmentedColormap
     assert isinstance(color_map, LinearSegmentedColormap)
 
     # Check if the number of colors in the color map matches the input list
-    assert len(color_map.colors) == len(hex_list)
+    assert len(color_map._segmentdata['red']) == len(hex_list)
+    assert len(color_map._segmentdata['green']) == len(hex_list)
+    assert len(color_map._segmentdata['blue']) == len(hex_list)
 
     # Check if the color map is created correctly by comparing specific colors
     assert np.allclose(color_map(0.0), (1.0, 0.0, 0.0, 1.0))  # First color should be red
     assert np.allclose(color_map(0.5), (0.0, 1.0, 0.0, 1.0))  # Middle color should be green
     assert np.allclose(color_map(1.0), (0.0, 0.0, 1.0, 1.0))  # Last color should be blue
-
 
 def test_calculate_square_corners():
     pointlat = 10.0
