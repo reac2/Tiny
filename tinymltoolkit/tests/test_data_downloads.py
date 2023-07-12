@@ -1,12 +1,13 @@
 import pytest
 import numpy as np
 from matplotlib.colors import LinearSegmentedColormap
-from data_download import create_color_map, calculate_square_corners
+from tinymltoolkit import data_download
+
 
 def test_create_color_map():
     hex_list = ['#FF0000', '#00FF00', '#0000FF']
 
-    color_map = create_color_map(hex_list)
+    color_map = data_download.create_color_map(hex_list)
 
     # Check if the returned object is an instance of LinearSegmentedColormap
     assert isinstance(color_map, LinearSegmentedColormap)
@@ -25,7 +26,7 @@ def test_calculate_square_corners():
     pointlong = 20.0
     pad = 0.1
 
-    toplat, toplong, botlat, botlong = calculate_square_corners(pointlat, pointlong, pad)
+    toplat, toplong, botlat, botlong = data_download.calculate_square_corners(pointlat, pointlong, pad)
 
     # Check if the calculated values are correct
     assert toplat == 10.1
@@ -40,4 +41,3 @@ def test_calculate_square_corners():
     assert toplong == 20.05
     assert botlat == 9.95
     assert botlong == 19.95
-
