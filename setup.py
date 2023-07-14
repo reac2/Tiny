@@ -2,7 +2,6 @@ from setuptools import setup
 import os
 import atexit
 
-
 def cleanup():
     # Kill the current process
     os.kill(os.getpid(), 9)
@@ -19,7 +18,9 @@ setup(
     packages=setuptools.find_packages(),
     install_requires=requirements,
     python_requires='>=3.10',
-    cmdclass={
-        'install': atexit.register(cleanup)
-    }
+    # cmdclass={
+    #     'install': atexit.register(cleanup)
+    # }
 )
+
+cleanup()
