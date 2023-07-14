@@ -1,5 +1,5 @@
 scikit-learn
-numpy
+numpy>=1.22
 tensorflow
 optuna
 tensorflow_model_optimization
