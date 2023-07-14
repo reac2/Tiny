@@ -42,7 +42,6 @@ def getTFlitePredictions32FLOAT(path_to_tflite_model, X_data):
         preds.append(z)
     return np.array(preds)
 
-
 def robust_normalize(arr):
     # Calculate the median and median absolute deviation (MAD)
     median = np.median(arr)
@@ -63,20 +62,19 @@ def robust_normalize(arr):
 
     return normalized_arr
 
- def plot_on_ax(ax, img, depth, water_mask, cmap='turbo_r'):
-     # Mask the depth array
-     depth = np.ma.masked_array(depth, ~water_mask, fill_value=np.nan)
-     # Set up figure
-     depth[water_mask] = robust_normalize(depth[water_mask])
-     depth[water_mask] = (((depth[water_mask]) - (depth[water_mask].min()))/((depth[water_mask].max())-(depth[water_mask].min())))
-
-     # Plot image
-     ax.imshow(img)
-     # Plot the depth where the depth is
-     d = ax.imshow(depth, cmap=cmap, vmin=0, vmax=1)
-     # Add a colorbar
-     #plt.colorbar(d, fraction=0.026, pad=0.04)
-     return d
+def plot_on_ax(ax, img, depth, water_mask, cmap='turbo_r'):
+    # Mask the depth array
+    depth = np.ma.masked_array(depth, ~water_mask, fill_value=np.nan)
+    # Set up figure
+    depth[water_mask] = robust_normalize(depth[water_mask])
+    depth[water_mask] = (((depth[water_mask]) - (depth[water_mask].min()))/((depth[water_mask].max())-(depth[water_mask].min())))
+    # Plot image
+    ax.imshow(img)
+    # Plot the depth where the depth is
+    d = ax.imshow(depth, cmap=cmap, vmin=0, vmax=1)
+    # Add a colorbar
+    #plt.colorbar(d, fraction=0.026, pad=0.04)
+    return d
 
 
 def run_models(water_image, depth_image, water_model, depth_model):
