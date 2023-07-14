@@ -2,6 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import tensorflow as tf
 from tqdm import tqdm
+import rasterio
 from tinymltoolkit.data_download import mask_from_bitmask, scale_im, get_water_depth
 
 def getTFlitePredictions32FLOAT(path_to_tflite_model, X_data):
