@@ -91,7 +91,7 @@ def getTFlitePredictions32FLOAT(path_to_tflite_model, X_data):
     preds = []
     for i, x in tqdm(enumerate(X_data), total=n_points):
         # Preprocess the input data
-        x = x.astype(np.float32).reshape(1, 28, 28)
+        x = x.astype(np.float32)
         # Set the input tensor
         interpreter.resize_tensor_input(input_index, x.shape)
         interpreter.allocate_tensors()
@@ -103,6 +103,7 @@ def getTFlitePredictions32FLOAT(path_to_tflite_model, X_data):
         z = output()[0].copy()
         preds.append(z)
     return np.array(preds)
+
 
 
 def getTFlitePredictions8INT(path_to_tflite_model, X_data):
